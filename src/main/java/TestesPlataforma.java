@@ -64,12 +64,12 @@ public class TestesPlataforma {
 		driver.manage().window().setSize(new Dimension(1200, 700));
 		driver.get("https://teste.projetolead.com.br/ead2pcd/app/login?ctrl=1");
 		
-		driver.findElement(By.linkText("Esqueci minha senha.")).click();
-		driver.findElement(By.id("formRecupera:usuario")).sendKeys("katarinagaldin@gmail.com");
-		driver.findElement(By.id("formRecupera:enviar")).click();
+		dsl.clicarLinkText("Esqueci minha senha.");
+		dsl.escrever("formRecupera:usuario","katarinagaldin@gmail.com");
+		dsl.clicarId("formRecupera:enviar");
 		
-		driver.findElement(By.tagName("h4")).getText().contains("Pedido realizado com sucesso");
-		driver.findElement(By.tagName("div")).getText().contains("Foi enviado para você um e-mail contendo informações para recuperação da senha.");		
+		dsl.pegaTextoPorElemento(By.tagName("h4")).contains("Pedido realizado com sucesso");
+		dsl.pegaTextoPorElemento(By.tagName("div")).contains("Foi enviado para você um e-mail contendo informações para recuperação da senha.");		
 	}
 
 	
@@ -78,10 +78,10 @@ public class TestesPlataforma {
 		driver.manage().window().setSize(new Dimension(1200, 700));
 		driver.get("https://teste.projetolead.com.br/ead2pcd/app/login?ctrl=1");
 		
-		driver.findElement(By.linkText("Esqueci minha senha.")).click();
-		driver.findElement(By.id("formRecupera:usuario")).sendKeys("email.errado@gmail.com");
-		driver.findElement(By.id("formRecupera:enviar")).click();
+		dsl.clicarLinkText("Esqueci minha senha.");
+		dsl.escrever("formRecupera:usuario","email@errado.com");
+		dsl.clicarId("formRecupera:enviar");
 		
-		driver.findElement(By.tagName("div")).getText().contains("Erro no pedido de mudança de senha");		
+		dsl.pegaTextoPorElemento(By.tagName("div")).contains("Erro no pedido de mudança de senha");		
 	}
 }

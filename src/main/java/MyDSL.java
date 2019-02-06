@@ -37,4 +37,8 @@ public class MyDSL {
     public String pegaTexto(String id) {
     	return pegaTextoPorElemento(By.id(id));
     }
+    
+    public void clicarLinkText(String id) {
+    	driver.findElement(By.linkText(id)).click();
+    }
 }
