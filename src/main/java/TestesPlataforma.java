@@ -5,7 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 
 public class TestesPlataforma {
 
@@ -22,10 +24,10 @@ public class TestesPlataforma {
 		dsl = new MyDSL(driver);
 	}
 	
-	@After
-	public void AfterMethod() {
-		driver.quit();
-	}
+	//@After
+	//public void AfterMethod() {
+		//driver.quit();
+	//}
 	
 	@Test
 	public void testeLogout1() {
@@ -84,4 +86,24 @@ public class TestesPlataforma {
 		
 		dsl.pegaTextoPorElemento(By.tagName("div")).contains("Erro no pedido de mudança de senha");		
 	}
-}
+	
+	@Test
+	public void testePerfil() {
+		driver.manage().window().setSize(new Dimension(1200, 700));
+		driver.get("https://teste.projetolead.com.br/ead2pcd/app/login?ctrl=1");
+		
+		dsl.escrever("usuario", "katarinaaluna");
+		dsl.escrever("senha", "katbug2o1#");
+		dsl.clicarTagName("button");
+		
+		dsl.clicarId("imgUsuario");
+		dsl.clicarCss(".popover-content li:nth-child(1) > a");
+		
+		
+		
+		
+		}
+		
+		
+	}
+

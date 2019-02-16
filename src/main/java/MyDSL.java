@@ -41,4 +41,12 @@ public class MyDSL {
     public void clicarLinkText(String id) {
     	driver.findElement(By.linkText(id)).click();
     }
+    
+    public void clicarCss(String css) {
+    	driver.findElement(By.cssSelector(css)).click();
+    }
+    
+    public void limpaCampo(String id) {
+    	driver.findElement(By.id(id)).clear();
+    }
 }
