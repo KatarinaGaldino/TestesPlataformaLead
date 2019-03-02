@@ -49,4 +49,8 @@ public class MyDSL {
     public void limpaCampo(String id) {
     	driver.findElement(By.id(id)).clear();
     }
+    
+    public boolean verificaSelecao(String id) {
+    	return driver.findElement(By.id(id)).isSelected();
+    }
 }
