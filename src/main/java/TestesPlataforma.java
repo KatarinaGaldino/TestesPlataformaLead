@@ -1,4 +1,5 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -36,8 +37,7 @@ public class TestesPlataforma {
 		dsl.escrever("senha", "abcd1235");
 		dsl.clicarPorName("_spring_security_remember_me");
 		dsl.clicarTagName("button");
-		
-		dsl.pegaTextoPorElemento(By.className("loginerror")).contains("Usuário e/ou senha inválidos. Verifique o usuário e senha e tente novamente.");
+		Assert.assertEquals("Usuário e/ou senha inválidos. Verifique o usuário e senha e tente novamente.", dsl.pegaTextoPorElemento(By.className("loginerror")));
 	}
 	
 	
@@ -79,8 +79,8 @@ public class TestesPlataforma {
 		dsl.escrever("formRecupera:usuario", "katarina.galdino@dellead.com");
 		dsl.clicarId("formRecupera:enviar");
 		
-		dsl.pegaTextoPorElemento(By.tagName("h4")).contains("Pedido realizado com sucesso");
-		dsl.pegaTextoPorElemento(By.tagName("div")).contains("Foi enviado para você um e-mail contendo informações para recuperação da senha.");		
+		Assert.assertEquals("Pedido realizado com sucesso", dsl.pegaTextoPorElemento(By.tagName("h4")));
+		Assert.assertEquals("Foi enviado para você um e-mail contendo informações para recuperação da senha.", dsl.pegaTextoPorElemento(By.tagName("div")));	
 	}
 
 	
@@ -89,10 +89,10 @@ public class TestesPlataforma {
 		driver.manage().window().setSize(new Dimension(1200, 700));
 		
 		dsl.clicarLinkText("Esqueci minha senha.");
-		dsl.escrever("formRecupera:usuario", "email@errado.com");
+		dsl.escrever("formRecupera:usuario","email@errado.com");
 		dsl.clicarId("formRecupera:enviar");
 
-		dsl.pegaTextoPorElemento(By.id("formRecupera:msgErroRecuperaSenha")).contains("Erro no pedido de mudança de senha");
+		Assert.assertEquals("Erro no pedido de mudança de senha", dsl.pegaTextoPorElemento(By.id("formRecupera:msgErroRecuperaSenha")));
 	}
 	
 	@Test

@@ -33,7 +33,7 @@ public class MyDSL {
 	public String pegaTextoPorElemento(By by) {
     	return driver.findElement(by).getText();
     }
-    
+	
     public String pegaTexto(String id) {
     	return pegaTextoPorElemento(By.id(id));
     }
