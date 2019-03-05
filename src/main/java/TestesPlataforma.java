@@ -1,11 +1,11 @@
-import org.junit.After;
-import org.junit.Assert;
+import java.util.List;import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
@@ -37,7 +37,7 @@ public class TestesPlataforma {
 		dsl.escrever("senha", "abcd1235");
 		dsl.clicarPorName("_spring_security_remember_me");
 		dsl.clicarTagName("button");
-		Assert.assertEquals("Usuário e/ou senha inválidos. Verifique o usuário e senha e tente novamente.", dsl.pegaTextoPorElemento(By.className("loginerror")));
+		dsl.pegaTextoPorElemento(By.className("loginerror")).contains("Usuário e/ou senha inválidos. Verifique o usuário e senha e tente novamente.");
 	}
 	
 	
@@ -78,9 +78,8 @@ public class TestesPlataforma {
 		dsl.clicarLinkText("Esqueci minha senha.");
 		dsl.escrever("formRecupera:usuario", "katarina.galdino@dellead.com");
 		dsl.clicarId("formRecupera:enviar");
-		
-		Assert.assertEquals("Pedido realizado com sucesso", dsl.pegaTextoPorElemento(By.tagName("h4")));
-		Assert.assertEquals("Foi enviado para você um e-mail contendo informações para recuperação da senha.", dsl.pegaTextoPorElemento(By.tagName("div")));	
+		dsl.pegaTextoPorElemento(By.tagName("h4")).contains("Pedido realizado com sucesso");
+		dsl.pegaTextoPorElemento(By.tagName("div")).contains("Foi enviado para você um e-mail contendo informações para recuperação da senha.");
 	}
 
 	
@@ -91,16 +90,15 @@ public class TestesPlataforma {
 		dsl.clicarLinkText("Esqueci minha senha.");
 		dsl.escrever("formRecupera:usuario","email@errado.com");
 		dsl.clicarId("formRecupera:enviar");
-
-		Assert.assertEquals("Erro no pedido de mudança de senha", dsl.pegaTextoPorElemento(By.id("formRecupera:msgErroRecuperaSenha")));
+		dsl.pegaTextoPorElemento(By.id("formRecupera:msgErroRecuperaSenha")).contains("Erro no pedido de mudança de senha");
 	}
 	
 	@Test
 	public void testePerfil() {
 		driver.manage().window().setSize(new Dimension(1200, 700));
 		
-		dsl.escrever("usuario", "katarinaaluna");
-		dsl.escrever("senha", "katbug2o1#");
+		dsl.escrever("usuario", "alunofisico4");
+		dsl.escrever("senha", "abcd1234");
 		dsl.clicarTagName("button");
 		
 		dsl.clicarId("imgUsuario");
@@ -111,8 +109,8 @@ public class TestesPlataforma {
 	public void testePerfil_VerificaOpAcessibilidade() {
 		driver.manage().window().setSize(new Dimension(1200, 700));
 		
-		dsl.escrever("usuario", "katarinaaluna");
-		dsl.escrever("senha", "katbug2o1#");
+		dsl.escrever("usuario", "alunofisico4");
+		dsl.escrever("senha", "abcd1234");
 		dsl.clicarTagName("button");
 		
 		dsl.clicarId("imgUsuario");
@@ -169,7 +167,45 @@ public class TestesPlataforma {
 		}
 
 	}
+
+	@Test
+	public void testePerfil_VerificaListaCursos() {
+		driver.manage().window().setSize(new Dimension(1200, 700));
+		
+		dsl.escrever("usuario", "alunofisico4");
+		dsl.escrever("senha", "abcd1234");
+		dsl.clicarTagName("button");
+		
+		driver.get("https://teste.projetolead.com.br/ead2pcd/app/perfil?execution=e2s1");
+		
+		List<WebElement> txtArticle = driver.findElements(By.className("form-control-perfil"));
+		System.out.println("QUANTIDADE DE CURSOS MATRICULADOS: " + txtArticle.size() + "\n");
+		System.out.println("CURSOS MATRICULADOS: ");
+        for (WebElement title : txtArticle) {
+            System.out.println(title.getText().toString());
+        }
+	}
 	
+	@Test
+	public void testeEnviarMensagem() {
+		driver.manage().window().setSize(new Dimension(1200, 700));
+		
+		dsl.escrever("usuario", "alunofisico4");
+		dsl.escrever("senha", "abcd1234");
+		dsl.clicarTagName("button");
+
+		dsl.clicarId("spanAbrirChat");
+
+		dsl.escrever("searchUser", "Katarina Aluna");
+		dsl.clicarClassName("submit-lupa");		
+		driver.findElement(By.xpath("//button[@id='buttonSearchUser']/i")).click();
+		driver.findElement(By.xpath("//div[@id='213549057-username']")).click();
+		
+		driver.switchTo().activeElement();
+		driver.findElement(By.cssSelector("input[type=\"text\"]")).sendKeys("OI");
+		driver.findElement(By.className("fa-paper-plane")).click();
 		
 	}
+		
+}
 

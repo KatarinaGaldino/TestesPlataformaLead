@@ -25,6 +25,9 @@ public class MyDSL {
 	public void clicarTagName(String name) {
     	driver.findElement(By.tagName(name)).click();
     }
+	public void clicarClassName(String classe) {
+		driver.findElement(By.className(classe));
+	}
 	
 	public void clicarId(String id) {
     	driver.findElement(By.id(id)).click();

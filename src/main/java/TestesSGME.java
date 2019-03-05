@@ -1,5 +1,4 @@
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -34,13 +33,19 @@ public MyDSL dsl;
 		dsl.escrever("login", "email@errado.com");
 		dsl.escrever("inputPassword", "abcd1235");
 		dsl.clicarId("btnLogin");
-		//dsl.pegaTextoPorElemento(By.tagName("div")).contains("Usuário e/ou senha inválidos. Verifique o usuário e senha e tente novamente.");
-		Assert.assertEquals("Usuário e/ou senha inválidos. Verifique o usuário e senha e tente novamente.", dsl.pegaTextoPorElemento(By.tagName("div")));
+		dsl.pegaTextoPorElemento(By.tagName("div")).contains("Usuário e/ou senha inválidos. Verifique o usuário e senha e tente novamente.");
 	}
 	
 	@Test
 	public void testeLogin_Email() {
 		dsl.escrever("login", "katarina.galdino@dellead.com");
+		dsl.escrever("inputPassword", "abcd1234");
+		dsl.clicarId("btnLogin");
+	}
+	
+	@Test
+	public void testeLogin_Telefone() {
+		dsl.escrever("login", "511.422.250-38");
 		dsl.escrever("inputPassword", "abcd1234");
 		dsl.clicarId("btnLogin");
 	}
